@@ -1,0 +1,64 @@
+---
+layout: runbook
+title: '#4471 · three problems, not one'
+owner: deadd1wer-devLab
+status: open
+reviewed: 2026-10-29
+signature: v1.eyJzdWIiOiIxNzg5IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyNjUzNzYsImV4cCI6MTc5MzM1MTc3Nn0.QuJK2kAZjVF4OONL3ZoB-NkPEnJ_k5vV5GtWp8zeeIY
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+[#4471](/kb/incidents/4471) was merged on subject lines ([decision 0001](/kb/decisions/0001-dedupe-by-subject)),
+so it reads as one bug with one fix queued. Read by tenant, by booking form and by what the reporters
+actually describe, it holds three problems. Each has a different fix, and each now has its own ticket.
+
+<Callout kind="warn">
+The queued parser fix closes only the first row. The other two keep coming after it ships.
+</Callout>
+
+## The split
+
+<ProblemTable ticket={4471} />
+
+A report belongs to exactly one row. Duplicate rows from the overlapping export are counted once.
+
+## `parser` · the shared parser reads day-first dates month first
+
+Every tenant on file writes the day first (asked of the platform in `locales.ts`, not typed in a list).
+The shared parser reads every date month first, so a day-first date comes out with day and month
+swapped: "Booked for 2 March. The invite says 3 February." This covers reports from the app, from email,
+and from the booking-v2 form. Fix: parse with the tenant's locale. This is the fix #4471 already queued.
+
+## `hint` · booking-v3 prints MM/DD/YYYY under its date field
+
+Day-first tenants who run booking-v3 show their people a month-first hint. People type what the hint
+says, and the form reads it the tenant's way, so the date flips before the parser sees it. Only reports
+that came in through the form, from booking-v3 tenants, are this problem. The parser fix does not touch
+it. Fix the hint (or read the field the way the hint asks), in booking-v3.
+
+## `shift` · the date moves by one day
+
+The desk already marked these in its notes as "read as a one-day move", then filed them under `parser` as
+a footnote. They are not a swap. "Invite says Tuesday 12 May. Calendar says Monday 11 May."
+"Client in Lisbon got Tuesday. Client in Toronto got Monday. Same meeting." The day changes with where
+the invite is read, which points at a date sent as midnight and shown in another time zone. Neither the
+parser fix nor the hint fix reaches it.
+
+## Read the cause from the tenant, not the intake tag
+
+Intake tags a report from the reporter's browser the moment it arrives. The "intake tagged" column above
+shows how often that guess disagrees with the tenant's locale and form. Count by tenant.
+
+## Why one ticket hid three
+
+Decision 0001 merges on the subject line alone, and reporters describe all three problems with the same
+words: "wrong day", "date is wrong". Same subject, different causes. The decision stays as accepted; a
+new record should replace it with a rule that keys on cause (tenant, form, channel), as
+[the triage explorer](/kb/triage/dedupe) already computes.
+
+<RenderStamp {signature} />
