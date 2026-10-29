@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="../../_app/immutable/entry/start.CZRbhfk1.js" rel="modulepreload">
+    <link href="../../_app/immutable/entry/start.Dqw7SRpr.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/DlMqkbta.js" rel="modulepreload">
-		<link href="../../_app/immutable/chunks/DDXiIbSO.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/DBVVzFYq.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/Bf09_hau.js" rel="modulepreload">
-		<link href="../../_app/immutable/entry/app.DZZxOlDI.js" rel="modulepreload">
+		<link href="../../_app/immutable/entry/app.0cBmd3i2.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/E-2nbm7m.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/BuA9gQby.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/DzpwtG-x.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/BbLv6-Rs.js" rel="modulepreload">
 		<link href="../../_app/immutable/nodes/0.DKnddjZH.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/C-UtU-xg.js" rel="modulepreload">
-		<link href="../../_app/immutable/nodes/5.xrsTe9YZ.js" rel="modulepreload">
-		<link href="../../_app/immutable/chunks/CTrbaRkT.js" rel="modulepreload">
+		<link href="../../_app/immutable/nodes/5.BPpoar0N.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/D01kJxAR.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/6ALyr1k1.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/_EHmXief.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/iXLSwIXB.js" rel="modulepreload">
@@ -27,7 +27,7 @@
   <body data-sveltekit-preload-data="hover">
     <div style="display: contents"><!--[--><!--[0--><!--[--><!--[--><div class="kb svelte-e2jw2j"><header><a class="crumb svelte-e2jw2j" href="/kb">support desk · kb</a> <h1 class="svelte-e2jw2j">#4471 · three problems, not one</h1> <p class="meta svelte-e2jw2j"><span>owner <b>deadd1wer-devLab</b></span> <span class="status open svelte-e2jw2j">open</span> <span class="svelte-e2jw2j">reviewed 2026-10-29 · 0 days ago</span></p></header> <!--[-1--><!--]--> <main><p><a href="/kb/incidents/4471">#4471</a> was merged on subject lines (<a href="/kb/decisions/0001-dedupe-by-subject">decision 0001</a>),
 so it reads as one bug with one fix queued. Read by tenant, by booking form and by what the reporters
-actually describe, it holds three problems. Each has a different fix, and each now has its own ticket.</p> <aside class="warn svelte-17bri61"><!---->The queued parser fix closes only the first row. The other two keep coming after it ships.<!----></aside><!----> <h2>The split</h2> <p class="sum svelte-1op6c6"><strong>412</strong> reports in #4471 · <strong>3</strong> problems <!--[-1--><!--]--></p> <table><thead><tr><th>problem</th><th>reports</th><th>tenants</th><th>channels</th><th>intake tagged</th><th>seen</th><th>ticket</th></tr></thead><tbody><!--[--><tr class="svelte-1op6c6"><td class="svelte-1op6c6"><code>parser</code></td><td class="n svelte-1op6c6">374</td><td class="svelte-1op6c6">11</td><td class="small svelte-1op6c6">app ×202 · email ×147 · form ×25</td><td class="small svelte-1op6c6">parser ×351 · hint ×23</td><td class="small svelte-1op6c6">2026-04-01 → 2026-10-04</td><td class="svelte-1op6c6"><!--[-1-->none yet<!--]--></td></tr><tr class="svelte-1op6c6"><td class="svelte-1op6c6"><code>hint</code></td><td class="n svelte-1op6c6">33</td><td class="svelte-1op6c6">3</td><td class="small svelte-1op6c6">form ×33</td><td class="small svelte-1op6c6">hint ×18 · parser ×15</td><td class="small svelte-1op6c6">2026-04-17 → 2026-09-22</td><td class="svelte-1op6c6"><!--[-1-->none yet<!--]--></td></tr><tr class="svelte-1op6c6"><td class="svelte-1op6c6"><code>shift</code></td><td class="n svelte-1op6c6">5</td><td class="svelte-1op6c6">5</td><td class="small svelte-1op6c6">email ×3 · app ×2</td><td class="small svelte-1op6c6">parser ×5</td><td class="small svelte-1op6c6">2026-04-02 → 2026-10-04</td><td class="svelte-1op6c6"><!--[-1-->none yet<!--]--></td></tr><!--]--></tbody><tfoot class="svelte-1op6c6"><tr><td class="svelte-1op6c6">all</td><td class="n svelte-1op6c6">412</td><td colspan="5" class="small svelte-1op6c6">every report is in exactly one row</td></tr></tfoot></table> <!--[--><p class="small svelte-1op6c6"><code>shift</code>: R-41202, R-41209, R-41236, R-41344, R-41620</p><!--]--><!----> <p>A report belongs to exactly one row. Duplicate rows from the overlapping export are counted once.</p> <h2><code>parser</code> · the shared parser reads day-first dates month first</h2> <p>Every tenant on file writes the day first (asked of the platform in <code>locales.ts</code>, not typed in a list).
+actually describe, it holds three problems. Each has a different fix, and each now has its own ticket.</p> <aside class="warn svelte-17bri61"><!---->The queued parser fix closes only the first row. The other two keep coming after it ships.<!----></aside><!----> <h2>The split</h2> <p class="sum svelte-1op6c6"><strong>412</strong> reports in #4471 · <strong>3</strong> problems <!--[-1--><!--]--></p> <table><thead><tr><th>problem</th><th>reports</th><th>tenants</th><th>channels</th><th>intake tagged</th><th>seen</th><th>ticket</th></tr></thead><tbody><!--[--><tr class="svelte-1op6c6"><td class="svelte-1op6c6"><code>parser</code></td><td class="n svelte-1op6c6">374</td><td class="svelte-1op6c6">11</td><td class="small svelte-1op6c6">app ×202 · email ×147 · form ×25</td><td class="small svelte-1op6c6">parser ×351 · hint ×23</td><td class="small svelte-1op6c6">2026-04-01 → 2026-10-04</td><td class="svelte-1op6c6"><!--[0--><a href="https://github.com/deadd1wer-devLab/support-kb/issues/1">deadd1wer-devLab/support-kb#1</a><!--]--></td></tr><tr class="svelte-1op6c6"><td class="svelte-1op6c6"><code>hint</code></td><td class="n svelte-1op6c6">33</td><td class="svelte-1op6c6">3</td><td class="small svelte-1op6c6">form ×33</td><td class="small svelte-1op6c6">hint ×18 · parser ×15</td><td class="small svelte-1op6c6">2026-04-17 → 2026-09-22</td><td class="svelte-1op6c6"><!--[0--><a href="https://github.com/deadd1wer-devLab/support-kb/issues/2">deadd1wer-devLab/support-kb#2</a><!--]--></td></tr><tr class="svelte-1op6c6"><td class="svelte-1op6c6"><code>shift</code></td><td class="n svelte-1op6c6">5</td><td class="svelte-1op6c6">5</td><td class="small svelte-1op6c6">email ×3 · app ×2</td><td class="small svelte-1op6c6">parser ×5</td><td class="small svelte-1op6c6">2026-04-02 → 2026-10-04</td><td class="svelte-1op6c6"><!--[0--><a href="https://github.com/deadd1wer-devLab/support-kb/issues/3">deadd1wer-devLab/support-kb#3</a><!--]--></td></tr><!--]--></tbody><tfoot class="svelte-1op6c6"><tr><td class="svelte-1op6c6">all</td><td class="n svelte-1op6c6">412</td><td colspan="5" class="small svelte-1op6c6">every report is in exactly one row</td></tr></tfoot></table> <!--[--><p class="small svelte-1op6c6"><code>shift</code>: R-41202, R-41209, R-41236, R-41344, R-41620</p><!--]--><!----> <p>A report belongs to exactly one row. Duplicate rows from the overlapping export are counted once.</p> <h2><code>parser</code> · the shared parser reads day-first dates month first</h2> <p>Every tenant on file writes the day first (asked of the platform in <code>locales.ts</code>, not typed in a list).
 The shared parser reads every date month first, so a day-first date comes out with day and month
 swapped: “Booked for 2 March. The invite says 3 February.” This covers reports from the app, from email,
 and from the booking-v2 form. Fix: parse with the tenant’s locale. This is the fix #4471 already queued.</p> <h2><code>hint</code> · booking-v3 prints MM/DD/YYYY under its date field</h2> <p>Day-first tenants who run booking-v3 show their people a month-first hint. People type what the hint
@@ -44,15 +44,15 @@ new record should replace it with a rule that keys on cause (tenant, form, chann
 			
 			<script>
 				{
-					__sveltekit_uuhwqc = {
+					__sveltekit_14wqq7w = {
 						base: new URL("../..", location).pathname.slice(0, -1)
 					};
 
 					const element = document.currentScript.parentElement;
 
 					Promise.all([
-						import("../../_app/immutable/entry/start.CZRbhfk1.js"),
-						import("../../_app/immutable/entry/app.DZZxOlDI.js")
+						import("../../_app/immutable/entry/start.Dqw7SRpr.js"),
+						import("../../_app/immutable/entry/app.0cBmd3i2.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 5],
