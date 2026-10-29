@@ -2,18 +2,18 @@
   import reports from '#lib/data/reports-4471.json';
   import notes from '#lib/data/desk-notes.json';
   import split from '#lib/data/split-4471.json';
-  import { splitTicket, type ProblemGroup } from '#lib/kb/problems';
+  import { uniqueById, type Report } from '#lib/kb/causes';
+  import { problemRows, type ProblemRow } from '#lib/kb/problems';
   import { tenantOf } from '#lib/kb/locales';
-  import type { Report } from '#lib/kb/causes';
 
   let { ticket }: { ticket: number } = $props();
 
-  const result = $derived(splitTicket(reports as Report[], ticket, tenantOf, notes.oneDayMove));
-  const placed = $derived(result.groups.filter((g) => g.problem !== 'unplaced'));
-  const unplaced = $derived(result.groups.find((g) => g.problem === 'unplaced'));
-  const counted = $derived(result.groups.reduce((n, g) => n + g.reports.length, 0));
+  const merged = $derived(uniqueById(reports as Report[]).filter((r) => r.mergedInto === ticket));
+  const result = $derived(problemRows(merged, tenantOf, notes.oneDayMove));
+  const placed = $derived(result.rows.filter((g) => g.problem !== 'unplaced'));
+  const unplaced = $derived(result.rows.find((g) => g.problem === 'unplaced'));
 
-  const issue = (g: ProblemGroup) => (split.issues as Record<string, number>)[g.problem];
+  const issue = (g: ProblemRow) => (split.issues as Record<string, number>)[g.problem];
   const list = (n: Record<string, number>) =>
     Object.entries(n)
       .sort((a, b) => b[1] - a[1])
@@ -22,7 +22,7 @@
 </script>
 
 <p class="sum">
-  <strong>{result.merged.length}</strong> reports in #{ticket} ·
+  <strong>{merged.length}</strong> reports in #{ticket} ·
   <strong>{placed.length}</strong>
   {placed.length === 1 ? 'problem' : 'problems'}
   {#if unplaced}· <strong class="warn">{unplaced.reports.length}</strong> not placed{/if}
@@ -33,11 +33,11 @@
     <tr><th>problem</th><th>reports</th><th>tenants</th><th>channels</th><th>intake tagged</th><th>seen</th><th>ticket</th></tr>
   </thead>
   <tbody>
-    {#each result.groups as g (g.problem)}
-      <tr class:unplaced={g.problem === 'unplaced'}>
+    {#each result.rows as g (g.problem)}
+      <tr class:unplaced={g.problem === 'unplaced'} class:sub={g.filedUnder}>
         <td><code>{g.problem}</code></td>
         <td class="n">{g.reports.length}</td>
-        <td>{g.tenants.length}</td>
+        <td>{g.tenants}</td>
         <td class="small">{list(g.channels)}</td>
         <td class="small">{list(g.taggedAs)}</td>
         <td class="small">{g.firstSeen} → {g.lastSeen}</td>
@@ -47,13 +47,13 @@
       </tr>
     {/each}
   </tbody>
-  <tfoot>
-    <tr><td>all</td><td class="n">{counted}</td><td colspan="5" class="small">{counted === result.merged.length ? 'every report is in exactly one row' : 'rows do not add up to the ticket: check the split'}</td></tr>
-  </tfoot>
 </table>
 
-{#each placed.filter((g) => g.reports.length <= 10) as g (g.problem)}
-  <p class="small"><code>{g.problem}</code>: {g.reports.map((r) => r.id).join(', ')}</p>
+{#each placed.filter((g) => g.filedUnder) as g (g.problem)}
+  <p class="small">
+    <code>{g.problem}</code>: {g.reports.map((r) => r.id).join(', ')}. Filed by tenant, so they are also counted under
+    {Object.entries(g.filedUnder ?? {}).map(([cause, n]) => `${cause} (${n})`).join(', ')}, the way the desk counts.
+  </p>
 {/each}
 
 <style>
@@ -62,5 +62,5 @@
   .small { color: var(--muted); font-size: 0.85em; }
   .warn { color: var(--warn); }
   .unplaced td { background: var(--warn-bg); }
-  tfoot td { border-bottom: none; font-weight: 600; }
+  .sub td:first-child { padding-left: 1.25rem; }
 </style>

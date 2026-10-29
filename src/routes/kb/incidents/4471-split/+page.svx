@@ -25,7 +25,9 @@ The queued parser fix closes only the first row. The other two keep coming after
 
 <ProblemTable ticket={4471} />
 
-A report belongs to exactly one row. Duplicate rows from the overlapping export are counted once.
+Counted the way the desk counts: by the cause the tenant gives each report, with duplicate rows from the
+overlapping export counted once. The one-day moves stay counted where they are filed and get their own row
+and ticket.
 
 ## `parser` · the shared parser reads day-first dates month first
 
@@ -43,8 +45,8 @@ it. Fix the hint (or read the field the way the hint asks), in booking-v3.
 
 ## `shift` · the date moves by one day
 
-The desk already marked these in its notes as "read as a one-day move", then filed them under `parser` as
-a footnote. They are not a swap. "Invite says Tuesday 12 May. Calendar says Monday 11 May."
+The desk already marked these in its notes as "read as a one-day move". They stay counted under `parser`,
+where their tenant files them, but a footnote is not a ticket. They are not a swap. "Invite says Tuesday 12 May. Calendar says Monday 11 May."
 "Client in Lisbon got Tuesday. Client in Toronto got Monday. Same meeting." The day changes with where
 the invite is read, which points at a date sent as midnight and shown in another time zone. Neither the
 parser fix nor the hint fix reaches it.
