@@ -14,6 +14,7 @@
   const unplaced = $derived(result.rows.find((g) => g.problem === 'unplaced'));
 
   const issue = (g: ProblemRow) => (split.issues as Record<string, number>)[g.problem];
+  const status = (g: ProblemRow) => (split.status as Record<string, { state: string; by: string }>)[g.problem];
   const list = (n: Record<string, number>) =>
     Object.entries(n)
       .sort((a, b) => b[1] - a[1])
@@ -30,7 +31,7 @@
 
 <table>
   <thead>
-    <tr><th>problem</th><th>reports</th><th>tenants</th><th>channels</th><th>intake tagged</th><th>seen</th><th>ticket</th></tr>
+    <tr><th>problem</th><th>reports</th><th>tenants</th><th>channels</th><th>intake tagged</th><th>seen</th><th>ticket</th><th>status</th></tr>
   </thead>
   <tbody>
     {#each result.rows as g (g.problem)}
@@ -44,6 +45,7 @@
         <td>
           {#if issue(g)}<a href="https://github.com/{split.repo}/issues/{issue(g)}">{split.repo}#{issue(g)}</a>{:else}none yet{/if}
         </td>
+        <td class="state {status(g)?.state === 'open' ? 'open' : ''}" title={status(g)?.by}>{status(g)?.state ?? 'unknown'}</td>
       </tr>
     {/each}
   </tbody>
@@ -63,4 +65,6 @@
   .warn { color: var(--warn); }
   .unplaced td { background: var(--warn-bg); }
   .sub td:first-child { padding-left: 1.25rem; }
+  .state { white-space: nowrap; color: var(--muted); }
+  .state.open { color: var(--warn); font-weight: 600; }
 </style>

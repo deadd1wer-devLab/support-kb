@@ -1,4 +1,9 @@
 {
   "repo": "deadd1wer-devLab/support-kb",
-  "issues": { "parser": 1, "hint": 2, "shift": 3 }
+  "issues": { "parser": 1, "hint": 2, "shift": 3 },
+  "status": {
+    "parser": { "state": "closed · fixed", "by": "fix(dates): parse dd/mm for eu locales" },
+    "hint": { "state": "closed · won't fix", "by": "booking-v3 form retired" },
+    "shift": { "state": "open", "by": "no fix yet: neither the parser fix nor retiring booking-v3 reaches it" }
+  }
 }

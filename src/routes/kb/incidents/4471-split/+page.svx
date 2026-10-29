@@ -1,6 +1,6 @@
 ---
 layout: runbook
-title: '#4471 · three problems, not one'
+title: '#4471 · one ticket per problem'
 owner: deadd1wer-devLab
 status: open
 reviewed: 2026-10-29
@@ -15,10 +15,12 @@ signature: v1.eyJzdWIiOiIxNzg5IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYX
 
 [#4471](/kb/incidents/4471) was merged on subject lines ([decision 0001](/kb/decisions/0001-dedupe-by-subject)),
 so it reads as one bug with one fix queued. Read by tenant, by booking form and by what the reporters
-actually describe, it holds three problems. Each has a different fix, and each now has its own ticket.
+actually describe, it holds more than one problem. Each has a different fix, and each now has its own
+ticket; the table counts them.
 
 <Callout kind="warn">
-The queued parser fix closes only the first row. The other two keep coming after it ships.
+#4471 closed on 5 October: the parser is fixed, and the hint won't be fixed because booking-v3 is retired.
+The one-day shift was in neither. Its ticket stays open.
 </Callout>
 
 ## The split
@@ -29,19 +31,27 @@ Counted the way the desk counts: by the cause the tenant gives each report, with
 overlapping export counted once. The one-day moves stay counted where they are filed and get their own row
 and ticket.
 
+## After #4471 closed
+
+Engineering closed #4471 on 5 October: `parser` fixed by "fix(dates): parse dd/mm for
+eu locales", and `hint` won't fix, because the booking-v3 form is retired. The parser and hint tickets are
+closed with those reasons. Neither outcome touches `shift`: a date that moves by one day is not read month first, and
+it does not come through the booking-v3 form. That ticket stays open until someone fixes it.
+
 ## `parser` · the shared parser reads day-first dates month first
 
 Every tenant on file writes the day first (asked of the platform in `locales.ts`, not typed in a list).
 The shared parser reads every date month first, so a day-first date comes out with day and month
 swapped: "Booked for 2 March. The invite says 3 February." This covers reports from the app, from email,
-and from the booking-v2 form. Fix: parse with the tenant's locale. This is the fix #4471 already queued.
+and from the booking-v2 form. Fix: parse with the tenant's locale. Fixed when #4471 closed: "fix(dates): parse dd/mm for eu locales".
 
 ## `hint` · booking-v3 prints MM/DD/YYYY under its date field
 
 Day-first tenants who run booking-v3 show their people a month-first hint. People type what the hint
 says, and the form reads it the tenant's way, so the date flips before the parser sees it. Only reports
 that came in through the form, from booking-v3 tenants, are this problem. The parser fix does not touch
-it. Fix the hint (or read the field the way the hint asks), in booking-v3.
+it. Won't fix: the booking-v3 form is retired, so its hint reaches no one and no new reports of this kind
+can come in.
 
 ## `shift` · the date moves by one day
 
@@ -49,16 +59,16 @@ The desk already marked these in its notes as "read as a one-day move". They sta
 where their tenant files them, but a footnote is not a ticket. They are not a swap. "Invite says Tuesday 12 May. Calendar says Monday 11 May."
 "Client in Lisbon got Tuesday. Client in Toronto got Monday. Same meeting." The day changes with where
 the invite is read, which points at a date sent as midnight and shown in another time zone. Neither the
-parser fix nor the hint fix reaches it.
+parser fix nor retiring booking-v3 reaches it. Still open.
 
 ## Read the cause from the tenant, not the intake tag
 
 Intake tags a report from the reporter's browser the moment it arrives. The "intake tagged" column above
 shows how often that guess disagrees with the tenant's locale and form. Count by tenant.
 
-## Why one ticket hid three
+## Why one ticket hid several
 
-Decision 0001 merges on the subject line alone, and reporters describe all three problems with the same
+Decision 0001 merges on the subject line alone, and reporters describe every problem here with the same
 words: "wrong day", "date is wrong". Same subject, different causes. The decision stays as accepted; a
 new record should replace it with a rule that keys on cause (tenant, form, channel), as
 [the triage explorer](/kb/triage/dedupe) already computes.
